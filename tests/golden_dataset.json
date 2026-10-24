@@ -1,0 +1,271 @@
+[
+  {
+    "id": "scenario_01_retail_search",
+    "project_name": "RetailCo OmniChannel GenAI Discovery",
+    "use_case_type": "search_and_discovery",
+    "problem_statement": "RetailCo experiences a 34% drop-off in search conversion due to brittle keyword-matching engines that fail to interpret complex user intent across 2.5 million product catalog items.",
+    "strategic_objectives": "Implement semantic multimodal search, increase conversion rate by 18%, and achieve sub-800ms P95 latency across web and mobile surfaces.",
+    "stakeholders_and_personas": "Executive Sponsor: Chief Digital Officer | Target Personas: Online Shoppers & Merchandising Category Managers",
+    "expected_kpi_categories": ["latency", "accuracy", "business_roi"],
+    "kpi_metrics": [
+      {
+        "name": "P95 Search Query Latency",
+        "category": "latency",
+        "baseline_value": 2400.0,
+        "target_value": 750.0,
+        "unit": "ms",
+        "telemetry_source": "Google Cloud Trace end-to-end spans"
+      },
+      {
+        "name": "Search Conversion Rate",
+        "category": "accuracy",
+        "baseline_value": 2.1,
+        "target_value": 3.8,
+        "unit": "%",
+        "telemetry_source": "Google Analytics 4 & BigQuery event stream"
+      },
+      {
+        "name": "Monthly Incremental GMV",
+        "category": "business_roi",
+        "baseline_value": 0.0,
+        "target_value": 450000.0,
+        "unit": "USD",
+        "telemetry_source": "Enterprise SAP ERP order ingestion logs"
+      }
+    ],
+    "architecture_spec": {
+      "use_case_type": "search_and_discovery",
+      "expected_rpm": 3500,
+      "security_tier": "high",
+      "max_latency_ms": 800,
+      "data_residency_region": "us-central1"
+    },
+    "expected_gcp_services": [
+      "Vertex AI (Gemini 2.5 Pro & Flash)",
+      "Cloud Run",
+      "Google Cloud Firestore (Native Mode)",
+      "Google Cloud Model Armor",
+      "Google Cloud DLP",
+      "Google Cloud Secret Manager"
+    ],
+    "compliance_standards": "SOC2 Type II, PCI-DSS Level 1, GDPR compliant",
+    "phased_roadmap": {
+      "phase_0": "3-week vector index tuning and catalog embeddings on Vertex AI Search",
+      "phase_1": "4-week A/B testing on 10% desktop web traffic",
+      "phase_2": "4-week mobile app rollout and multi-region cache warm-up",
+      "phase_3": "GA rollout to 100% production with automated catalog re-indexing"
+    },
+    "risks": [
+      {
+        "risk": "Out-of-stock items recommended during flash sales",
+        "impact": "High",
+        "mitigation": "Real-time Spanner inventory filter integration prior to ranking"
+      },
+      {
+        "risk": "Catalog embedding drift across seasonal fashion shifts",
+        "impact": "Medium",
+        "mitigation": "Automated bi-weekly vector re-embedding pipeline via Vertex AI Pipelines"
+      }
+    ],
+    "minimum_eval_score": 85
+  },
+  {
+    "id": "scenario_02_clinical_summarizer",
+    "project_name": "HealthSystem EHR Clinical Note Synthesizer",
+    "use_case_type": "summarization_and_rag",
+    "problem_statement": "Clinicians spend an average of 2.2 hours daily on retrospective documentation, leading to physician burnout and delayed patient discharge summaries.",
+    "strategic_objectives": "Generate ambient, structured SOAP notes from physician-patient audio transcripts, reducing documentation burden by 65% while strictly preserving HIPAA compliance.",
+    "stakeholders_and_personas": "Executive Sponsor: Chief Medical Officer | Target Personas: Attending Physicians, Registered Nurses, Medical Coders",
+    "expected_kpi_categories": ["accuracy", "latency", "business_roi"],
+    "kpi_metrics": [
+      {
+        "name": "Clinical Note Generation Latency",
+        "category": "latency",
+        "baseline_value": 7920.0,
+        "target_value": 1800.0,
+        "unit": "ms",
+        "telemetry_source": "Cloud Trace EHR webhook latency"
+      },
+      {
+        "name": "Clinical Fact Extraction Recall",
+        "category": "accuracy",
+        "baseline_value": 74.0,
+        "target_value": 96.5,
+        "unit": "%",
+        "telemetry_source": "Physician double-blind review validation corpus"
+      },
+      {
+        "name": "Physician Documentation Hours Saved",
+        "category": "business_roi",
+        "baseline_value": 0.0,
+        "target_value": 45.0,
+        "unit": "hours/month/physician",
+        "telemetry_source": "Epic EHR active session audit logs"
+      }
+    ],
+    "architecture_spec": {
+      "use_case_type": "summarization_and_rag",
+      "expected_rpm": 850,
+      "security_tier": "critical",
+      "max_latency_ms": 2000,
+      "data_residency_region": "us-central1"
+    },
+    "expected_gcp_services": [
+      "Vertex AI (Gemini 2.5 Pro & Flash)",
+      "Cloud Run",
+      "Google Cloud DLP",
+      "Google Cloud Model Armor",
+      "Google Cloud Secret Manager",
+      "Google Cloud Firestore (Native Mode)"
+    ],
+    "compliance_standards": "HIPAA Business Associate Agreement (BAA), SOC2 Type II, HITECH",
+    "phased_roadmap": {
+      "phase_0": "4-week clinical accuracy benchmark on de-identified historical charts",
+      "phase_1": "4-week shadow pilot in Outpatient Internal Medicine department",
+      "phase_2": "6-week phased deployment across Cardiology and Oncology clinics",
+      "phase_3": "Hospital-wide GA cutover and EHR bidirectional integration"
+    },
+    "risks": [
+      {
+        "risk": "Hallucination of patient allergies or dosage numbers",
+        "impact": "Critical",
+        "mitigation": "Strict extractive grounding checks and mandatory clinician review click-through"
+      },
+      {
+        "risk": "Accidental logging of unredacted Protected Health Information (PHI)",
+        "impact": "Critical",
+        "mitigation": "Google Cloud DLP de-identification pipeline before log emission"
+      }
+    ],
+    "minimum_eval_score": 90
+  },
+  {
+    "id": "scenario_03_fintech_fraud",
+    "project_name": "ApexPay Autonomous Fraud Triage Agent",
+    "use_case_type": "fraud_and_anomaly_detection",
+    "problem_statement": "ApexPay manual review queues are overwhelmed with 15,000 daily suspected chargeback cases, causing average dispute resolution cycles to exceed 14 business days.",
+    "strategic_objectives": "Automate evidence collection and anomaly investigation using multi-agent reasoning, reducing false positives by 40% and cutting resolution time to under 4 hours.",
+    "stakeholders_and_personas": "Executive Sponsor: Head of Risk & Compliance | Target Personas: Fraud Analysts & Compliance Officers",
+    "expected_kpi_categories": ["latency", "accuracy", "cost"],
+    "kpi_metrics": [
+      {
+        "name": "Investigation Time Per Dispute",
+        "category": "latency",
+        "baseline_value": 1200.0,
+        "target_value": 180.0,
+        "unit": "seconds",
+        "telemetry_source": "Cloud Trace dispute investigation span"
+      },
+      {
+        "name": "Fraud Detection Precision",
+        "category": "accuracy",
+        "baseline_value": 81.2,
+        "target_value": 95.8,
+        "unit": "%",
+        "telemetry_source": "Vertex AI Model Monitoring ground-truth feedback"
+      },
+      {
+        "name": "Cost Per Dispute Handled",
+        "category": "cost",
+        "baseline_value": 18.5,
+        "target_value": 3.2,
+        "unit": "USD",
+        "telemetry_source": "Cloud Billing export to BigQuery"
+      }
+    ],
+    "architecture_spec": {
+      "use_case_type": "fraud_and_anomaly_detection",
+      "expected_rpm": 2500,
+      "security_tier": "critical",
+      "max_latency_ms": 1500,
+      "data_residency_region": "us-central1"
+    },
+    "expected_gcp_services": [
+      "Vertex AI (Gemini 2.5 Pro & Flash)",
+      "Cloud Run",
+      "Google Cloud Firestore (Native Mode)",
+      "Google Cloud Model Armor",
+      "Google Cloud DLP",
+      "BigQuery (Analytics & Audit)"
+    ],
+    "compliance_standards": "PCI-DSS Level 1, GLBA, SOC2 Type II, AML/KYC guidelines",
+    "phased_roadmap": {
+      "phase_0": "3-week offline replay against 50,000 historical disputed transactions",
+      "phase_1": "4-week shadow agent triage recommending actions alongside tier-1 analysts",
+      "phase_2": "4-week autonomous resolution for low-risk transactions (<$50)",
+      "phase_3": "Full production GA with continuous model evaluation and human escalation"
+    },
+    "risks": [
+      {
+        "risk": "Adversarial evasion through coordinated botnet chargebacks",
+        "impact": "High",
+        "mitigation": "Cloud Armor behavioral rate limiting and multi-hop entity graph analysis"
+      }
+    ],
+    "minimum_eval_score": 85
+  },
+  {
+    "id": "scenario_04_supply_chain",
+    "project_name": "LogiGlobal Multi-Modal Freight Dispatcher",
+    "use_case_type": "multi_agent_automation",
+    "problem_statement": "LogiGlobal operations teams manually process thousands of unstructured bill-of-lading PDFs and customs clearance forms daily across 40 maritime ports.",
+    "strategic_objectives": "Extract cargo manifests, detect customs anomalies, and automatically assign drayage trucks with 99.5% accuracy.",
+    "stakeholders_and_personas": "Executive Sponsor: VP of Global Logistics | Target Personas: Dispatch Coordinators & Customs Brokers",
+    "expected_kpi_categories": ["throughput", "accuracy", "latency"],
+    "kpi_metrics": [
+      {
+        "name": "Manifest Processing P95 Latency",
+        "category": "latency",
+        "baseline_value": 15000.0,
+        "target_value": 2400.0,
+        "unit": "ms",
+        "telemetry_source": "Cloud Trace end-to-end processing pipeline"
+      },
+      {
+        "name": "Customs Tariff Code Precision",
+        "category": "accuracy",
+        "baseline_value": 78.5,
+        "target_value": 98.2,
+        "unit": "%",
+        "telemetry_source": "BigQuery audit logs of customs reconciliations"
+      },
+      {
+        "name": "Daily Manifest Throughput",
+        "category": "throughput",
+        "baseline_value": 1200.0,
+        "target_value": 8500.0,
+        "unit": "documents/day",
+        "telemetry_source": "Cloud Monitoring container metric count"
+      }
+    ],
+    "architecture_spec": {
+      "use_case_type": "multi_agent_automation",
+      "expected_rpm": 1500,
+      "security_tier": "high",
+      "max_latency_ms": 3000,
+      "data_residency_region": "us-central1"
+    },
+    "expected_gcp_services": [
+      "Vertex AI (Gemini 2.5 Pro & Flash)",
+      "Cloud Run",
+      "Google Cloud Firestore (Native Mode)",
+      "Google Cloud Model Armor",
+      "Google Cloud DLP"
+    ],
+    "compliance_standards": "ISO 27001, C-TPAT security standards, SOC2",
+    "phased_roadmap": {
+      "phase_0": "3-week document parsing validation on 500 multilingual bills of lading",
+      "phase_1": "4-week dual-run pilot at Port of Los Angeles and Port of Long Beach",
+      "phase_2": "6-week expansion to transatlantic routes",
+      "phase_3": "Global multi-region deployment across 40 container terminals"
+    },
+    "risks": [
+      {
+        "risk": "Low-quality scanned faxes causing optical character errors",
+        "impact": "Medium",
+        "mitigation": "Pre-processing contrast enhancement and confidence score thresholding"
+      }
+    ],
+    "minimum_eval_score": 85
+  }
+]
